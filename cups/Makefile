@@ -175,8 +175,8 @@ define Build/Configure
 	$(call Build/Configure/Default, \
 		--with-cups-user="nobody" \
 		--with-cups-group="nogroup" \
-		--with-system-groups="root" \		
-		--with-pdftops="none" \		
+		--with-system-groups="root" \
+		--with-pdftops="none" \
 		--without-perl \
 		--without-python \
 		--without-php \
