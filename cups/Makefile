@@ -79,7 +79,7 @@ define Package/cups-filters
 $(call Package/cups/Default)
   SECTION:=net
   CATEGORY:=Network
-  DEPENDS:=+libcupsimage +libcupsdriver
+  DEPENDS:=+libcupsimage
   TITLE:=Common UNIX Printing System - Filter
 endef
 
@@ -121,18 +121,6 @@ endef
 
 define Package/libcupscgi/description
 	Common UNIX Printing System - CGI library
-endef
-
-define Package/libcupsdriver
-$(call Package/cups/Default)
-  SECTION:=libs
-  CATEGORY:=Libraries
-  DEPENDS:=+libcups
-  TITLE:=Common UNIX Printing System - Driver library
-endef
-
-define Package/libcupsdriver/description
-	Common UNIX Printing System - Driver library
 endef
 
 define Package/libcupsimage
@@ -279,7 +267,7 @@ endef
 
 define Package/cups-filters/install
 	$(INSTALL_DIR) $(1)/usr/lib/cups/filter
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/filter/{bannertops,commandtoescpx,commandtopclx,imagetops,imagetoraster,rastertoepson,rastertopwg,rastertohp,rastertoescpx,rastertopclx,rastertolabel,texttops} \
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/filter/{commandtops,gziptoany,pstops,rastertoepson,rastertohp,rastertolabel,rastertopwg} \
 		$(1)/usr/lib/cups/filter
 	(cd $(1)/usr/lib/cups/filter; ln -sf rastertolabel rastertodymo;)
 endef
@@ -299,11 +287,6 @@ endef
 define Package/libcupscgi/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libcupscgi.so* $(1)/usr/lib/
-endef
-
-define Package/libcupsdriver/install
-	$(INSTALL_DIR) $(1)/usr/lib
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libcupsdriver.so* $(1)/usr/lib/
 endef
 
 define Package/libcupsimage/install
@@ -333,7 +316,6 @@ endef
 $(eval $(call BuildPackage,cups))
 $(eval $(call BuildPackage,libcups))
 $(eval $(call BuildPackage,libcupscgi))
-$(eval $(call BuildPackage,libcupsdriver))
 $(eval $(call BuildPackage,libcupsimage))
 $(eval $(call BuildPackage,libcupsmime))
 $(eval $(call BuildPackage,libcupsppdc))
