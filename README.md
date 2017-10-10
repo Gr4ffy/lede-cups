@@ -10,7 +10,7 @@ echo "src-git cups https://github.com/Gr4ffy/lede-cups.git" >> feeds.conf.defaul
 
 ./scripts/feeds install -a
 
-make menuconfig (set Network->Printing->cups as <M>)
+make menuconfig (set Network->Printing->cups as "M")
 
 make
 
