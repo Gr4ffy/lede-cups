@@ -9,12 +9,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cups
-PKG_VERSION:=2.1.4
+PKG_VERSION:=2.2.6
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-source.tar.gz
-PKG_SOURCE_URL:=http://www.cups.org/software/$(PKG_VERSION)
-PKG_MD5SUM:=9f9bf6e3b9c20a3519b4dc409666d6e7
+PKG_SOURCE_URL:=https://github.com/apple/cups/releases/download/v$(PKG_VERSION)/
+PKG_MD5SUM:=e91c26d8d97b5a1630a962f530f02192
 
 TARGET_LDFLAGS+=-Wl,-rpath-link=$(STAGING_DIR)/usr/lib
 
@@ -155,6 +155,140 @@ define Package/libcupsppdc/description
 	Common UNIX Printing System - PPDC library
 endef
 
+
+
+define Package/cups-locale-zhcn
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Chinese locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-zhcn/description
+	CUPS Chinese locale resouces.
+endef
+
+
+
+define Package/cups-locale-ca
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Catalan locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-ca/description
+	CUPS Catalan locale resouces.
+endef
+
+
+define Package/cups-locale-cs
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Czech locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-cs/description
+	CUPS Czech locale resouces.
+endef
+
+
+define Package/cups-locale-de
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=German locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-de/description
+	CUPS German locale resouces.
+endef
+
+
+define Package/cups-locale-es
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Spanish locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-es/description
+	CUPS Spanish locale resouces.
+endef
+
+
+define Package/cups-locale-fr
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=French locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-fr/description
+	CUPS French locale resouces.
+endef
+
+
+define Package/cups-locale-it
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Italian locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-it/description
+	CUPS Italian locale resouces.
+endef
+
+
+define Package/cups-locale-ja
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Japanese locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-ja/description
+	CUPS Japanese locale resouces.
+endef
+
+
+define Package/cups-locale-ptBR
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Brazilian Portuguese locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-ptBR/description
+	CUPS Brazilian Portuguese locale resouces.
+endef
+
+
+define Package/cups-locale-ru
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Russian locale for CUPS
+    DEPENDS:=cups
+  SUBMENU:=Printing
+endef
+
+define Package/cups-locale-ru/description
+	CUPS Russian locale resouces.
+endef
+
+
+
 define Build/Configure
 	$(call Build/Configure/Default, \
 		--with-cups-user="nobody" \
@@ -208,15 +342,15 @@ define Package/cups/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/daemon $(1)/usr/lib/cups
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/driver $(1)/usr/lib/cups
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/monitor $(1)/usr/lib/cups
-	$(INSTALL_DIR) $(1)/usr/lib/cups/filter
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/cups/filter/{commandtops,pstops} \
-		$(PKG_INSTALL_DIR)/usr/lib/cups/filter/gziptoany \
-		$(1)/usr/lib/cups/filter
 	$(INSTALL_DIR) $(1)/usr/share/cups/templates
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/*.tmpl \
 		$(1)/usr/share/cups/templates/
 	$(INSTALL_DIR) $(1)/usr/share/cups/mime
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/mime/* $(1)/usr/share/cups/mime/
+	$(INSTALL_DIR) $(1)/usr/share/icons/hicolor/16x16/apps
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/icons/hicolor/16x16/apps/cups.png $(1)/usr/share/icons/hicolor/16x16/apps/
+	$(INSTALL_DIR) $(1)/usr/share/icons/hicolor/32x32/apps
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/icons/hicolor/32x32/apps/cups.png $(1)/usr/share/icons/hicolor/32x32/apps/
 	### Do install docs: cups web interface relies on them
 	$(INSTALL_DIR) $(1)/usr/share/doc/cups
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/*.*html \
@@ -225,7 +359,11 @@ define Package/cups/install
 		$(1)/usr/share/doc/cups/
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/*.txt \
 		$(1)/usr/share/doc/cups/
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/*.txt \
+		$(1)/usr/share/doc/cups/
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/images \
+		$(1)/usr/share/doc/cups/
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/doc/cups/help \
 		$(1)/usr/share/doc/cups/
 	$(INSTALL_DIR) $(1)/usr/sbin
 	# overwrite default config with our own
@@ -250,7 +388,7 @@ endef
 define Package/cups-client/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) \
-		$(PKG_INSTALL_DIR)/usr/bin/{lp,cancel,cupstestppd,cupstestdsc} \
+		$(PKG_INSTALL_DIR)/usr/bin/{lp,cancel,cupstestppd,cupstestdsc,cups-config} \
 		$(PKG_INSTALL_DIR)/usr/bin/{ipptool,lpoptions,lpstat} \
 		$(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/sbin
@@ -259,6 +397,9 @@ define Package/cups-client/install
 		$(PKG_INSTALL_DIR)/usr/sbin/{lpadmin,lpinfo,lpmove} \
 		$(1)/usr/sbin/
 	(cd $(1)/usr/sbin; ln -sf cupsaccept accept; ln -sf cupsaccept cupsenable; ln -sf cupsaccept cupsdisable; ln -sf cupsaccept reject; ln -sf cupsaccept cupsreject;)
+	$(INSTALL_DIR) $(1)/usr/share/cups/ipptool
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/ipptool/* \
+		$(1)/usr/share/cups/ipptool/
 endef
 
 define Package/cups-filters/install
@@ -300,6 +441,78 @@ define Package/libcupsppdc/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/libcupsppdc.so* $(1)/usr/lib/
 endef
 
+
+
+define Package/cups-locale-ca/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/ca
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/ca/* $(1)/usr/share/locale/ca/
+endef
+
+define Package/cups-locale-cs/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/cs
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/cs/* $(1)/usr/share/locale/cs/
+endef
+
+define Package/cups-locale-de/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/de
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/de/* $(1)/usr/share/locale/de/
+	$(INSTALL_DIR) $(1)/usr/share/cups/templates/de
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/de/*.tmpl \
+		$(1)/usr/share/cups/templates/de/
+endef
+
+define Package/cups-locale-es/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/es
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/es/* $(1)/usr/share/locale/es/
+	$(INSTALL_DIR) $(1)/usr/share/cups/templates/es
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/es/*.tmpl \
+		$(1)/usr/share/cups/templates/es/
+endef
+
+define Package/cups-locale-fr/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/fr
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/fr/* $(1)/usr/share/locale/fr/
+	$(INSTALL_DIR) $(1)/usr/share/cups/templates/fr
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/fr/*.tmpl \
+		$(1)/usr/share/cups/templates/fr/
+endef
+
+define Package/cups-locale-it/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/it
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/it/* $(1)/usr/share/locale/it/
+endef
+
+define Package/cups-locale-ja/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/ja
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/ja/* $(1)/usr/share/locale/ja/
+	$(INSTALL_DIR) $(1)/usr/share/cups/templates/ja
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/ja/*.tmpl \
+		$(1)/usr/share/cups/templates/ja/
+endef
+
+define Package/cups-locale-ptBR/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/pt_BR
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/pt_BR/* $(1)/usr/share/locale/pt_BR/
+	$(INSTALL_DIR) $(1)/usr/share/cups/templates/pt_BR
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/pt_BR/*.tmpl \
+		$(1)/usr/share/cups/templates/pt_BR/
+endef
+
+define Package/cups-locale-ru/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/ru
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/ru/* $(1)/usr/share/locale/ru/
+	$(INSTALL_DIR) $(1)/usr/share/cups/templates/ru
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/cups/templates/ru/*.tmpl \
+		$(1)/usr/share/cups/templates/ru/
+endef
+
+define Package/cups-locale-zhcn/install
+	$(INSTALL_DIR) $(1)/usr/share/locale/zh_CN
+	$(CP) $(PKG_INSTALL_DIR)/usr/share/locale/zh_CN/* $(1)/usr/share/locale/zh_CN/
+endef
+
+
+
 define Build/InstallDev
 	$(INSTALL_DIR) $(2)/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/cups-config $(2)/bin/
@@ -319,3 +532,14 @@ $(eval $(call BuildPackage,cups-bsd))
 $(eval $(call BuildPackage,cups-client))
 $(eval $(call BuildPackage,cups-filters))
 $(eval $(call BuildPackage,cups-ppdc))
+$(eval $(call BuildPackage,cups-locale-ca))
+$(eval $(call BuildPackage,cups-locale-cs))
+$(eval $(call BuildPackage,cups-locale-de))
+$(eval $(call BuildPackage,cups-locale-es))
+$(eval $(call BuildPackage,cups-locale-fr))
+$(eval $(call BuildPackage,cups-locale-it))
+$(eval $(call BuildPackage,cups-locale-ja))
+$(eval $(call BuildPackage,cups-locale-ptBR))
+$(eval $(call BuildPackage,cups-locale-ru))
+$(eval $(call BuildPackage,cups-locale-zhcn))
+
