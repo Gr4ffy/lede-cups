@@ -1,6 +1,6 @@
 --- a/configure
 +++ b/configure
-@@ -6087,7 +6087,7 @@ fi
+@@ -5896,7 +5896,7 @@ fi
  
  case "$COMPONENTS" in
  	all)
