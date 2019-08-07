@@ -1,4 +1,4 @@
-# lede-cups
+# This repository is no longer maintained
 
 git clone https://github.com/lede-project/source
 
